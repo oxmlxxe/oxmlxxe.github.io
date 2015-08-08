@@ -20,7 +20,7 @@ Demo 4:
 - Use hlinkHover with pptaction to execute remote program (//[IP]/SHARE/reverse.exe) by a user hovering over an image
 
 DOCX Overview:
-http://openxmldeveloper.org/blog/b/openxmldeveloper/archive/2011/10/13/getting-started-with-open-xml-development.aspx
+
 
 Facebook Bug Bounty:
 http://attack-secure.com/hacked-facebook-word-document/
