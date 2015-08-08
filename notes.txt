@@ -22,4 +22,6 @@ Demo 4:
 DOCX Overview:
 http://openxmldeveloper.org/blog/b/openxmldeveloper/archive/2011/10/13/getting-started-with-open-xml-development.aspx
 
-Facebook Bug Bounty
+Facebook Bug Bounty:
+http://attack-secure.com/hacked-facebook-word-document/
+
