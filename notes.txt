@@ -20,7 +20,7 @@ Demo 4:
 - Use hlinkHover with pptaction to execute remote program (//[IP]/SHARE/reverse.exe) by a user hovering over an image
 
 DOCX Overview:
-
+https://msdn.microsoft.com/en-us/library/aa338205%28v=office.12%29.aspx#office2007aboutnewfileformat_structureoftheofficexmlformats
 
 Facebook Bug Bounty:
 http://attack-secure.com/hacked-facebook-word-document/
