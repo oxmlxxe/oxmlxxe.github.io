@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Exploiting XXE in File Parsing Functionality</title>
+
+		<meta name="description" content="">
+		<meta name="author" content="Exploiting XXE in File Parsing Functionality">
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/league.css" id="theme">
+
+		<!-- Code syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<div class="slides">
+				<section>
+					<h1>Exploiting XXE in File Upload Functionality</h1>
+					<h2>Blackhat Webcast - 11/19/15</h2>
+					<p style="font-size:120%">Will Vandevanter - @_will_is_</p>
+				</section>
+
+				<section style="text-align:left">
+					<p style="font-size:140%;">Agenda (30 minutes):</p>
+					<ul style="margin-left:10%">
+						<li style="font-size:140%;" class="fragment">OOXML Format, Demo</li>
+						<li style="font-size:140%;" class="fragment">Other File Formats, Demo</li>
+						<li style="font-size:140%;" class="fragment">Further Exploitation</li>
+					</ul>
+					<br>
+					<p><u>Slides, References, and Code:</u></p>
+					<p style="font-size:160%; margin-left:10%">oxmlxxe.github.io</p>
+				</section>
+				</section>
+				<section>
+					<h2 style="text-align:left">Office Open XML (OpenXML; OOXML; OXML)</h2>
+					<ul style="font-size:150%">
+						<li class="fragment">*.docx, *.pptx, *.xlsx</li>
+						<li class="fragment">"Open" File Format developed by Microsoft</li>
+						<li class="fragment">Available for Office 2003, Default in Office 2007</li>
+						<li class="fragment">ZIP archive containing XML and media files</li>
+					</ul>
+				</section>
+
+				<section>
+				<img width="800" height="600" data-src="./oxml_file_cont.gif">
+				</section>
+
+				<section style="font-size:130%">
+					<h2>General Parsing OOXML</h2>
+					<ol>
+						<li>/_rels/.rels</li>
+						<li>[Content_Types].xml</li>
+						<li>Default Main Document Part</li>
+						<ul>
+							<li>/word/document.xml</li>
+							<li>/ppt/presentation.xml</li>
+							<li>/xl/workbook.xml</li>
+						</ul>
+					</ol>
+				</section>
+				<section style="text-align:left; width:120%">
+					<img src="./word_doc.png" height="150" width="150" class="fragment">
+					<img src="./unzip1.png" height="225" width="225" class="fragment">
+					<img src="./xml.png" height="225" width="225" class="fragment">
+					<img src="./zip.png" height="225" width="225" class="fragment">
+					<img src="./word_doc.png" height="150" width="150" class="fragment"><br>
+					<img src="./public/arrow.png" style="transform: rotate(180deg); -webkit-transform: rotate(180deg); -webkit-transform: inverse(100%);" height="150" width="150" class="fragment">
+					<img src="./unzip1.png" height="225" width="225" class="fragment">
+					<img src="./xml.png" height="225" width="225" class="fragment">
+					<img src="./dollar.png" height="225" width="225" class="fragment">
+				</section>
+
+				<section style="font-size:130%">
+					<h2>Bug Bounty: Slack.com</h2>
+					<ul style="text-align: left; font-size:130%">
+						<li> File Sharing Functionality </li>
+					</ul>
+				</section>
+				<section style="font-size:130%">
+					<h2>Bug Bounty: Facebook Careers</h2>
+					<ul style="text-align: left; font-size:130%">
+						<li> Q4 2014 - Mohamed Ramadan </li>
+						<li>Resume Upload Functionality</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2 style="text-align: left; font-size:250%; margin-left:10%">oxml_xxe demo</h2>
+						<p style="text-align: left; font-size:180%; margin-left:15%"> XXE in docx </p>
+				</section>
+
+				<section style="font-size:130%">
+					<h2>PDF XXE</h2>
+					<ul>
+						<li class="fragment">Javascript that included XML with an XXE</li>
+						<ul>
+							<li class="fragment">Exploited in Adobe Reader 7; 2005-06-15</li>
+						</ul>
+
+						<li class="fragment">Extensible Metadata Platform (XMP)</li>
+						<ul>
+							<li class="fragment">ISO Standard, Created by Adobe</li>
+							<li class="fragment">Provides support for metadata without breaking readability</li>
+						</ul>
+
+					</ul>
+				</section>
+
+				<section>
+
+				<h2 style="text-align: left; font-size:250%; margin-left:10%">oxml_xxe demo</h2>
+						<p style="text-align: left; font-size:180%; margin-left:15%"> XXE in PDF </p>
+				</section>
+
+				<section style="font-size:130%">
+					<h2>XMP In Image Formats </h2>
+					<ul>
+						<li class="fragment">GIF, PNG</li>
+						<li class="fragment">JPG</li>
+						<ul>
+							<li class="fragment">Lens Blur Camera Photo Feature</li>
+						</ul>
+					</ul>
+				</section>
+
+
+<section>
+<img height=550 width=1400 src="depthmap.png">
+<p>Google Research - "Lens Blur in the new Google Camera App" (04/16/14)</p>
+</section>
+
+<section>
+<img src="depthmap_xmp.png">
+</section>
+
+<section>
+<img src="java_code.png">
+</section>
+
+				<section>
+					<h2 style="text-align: left; font-size:250%; margin-left:10%">oxml_xxe demo</h2>
+						<p style="text-align: left; font-size:180%; margin-left:15%"> XXE in JPG </p>
+				</section>
+
+<section>
+<div style="background-color: rgb(20, 98, 135); width: 70%; height: 125%; position: absolute; top: -6%; left: -45%; z-index: -1;">
+</div>
+<div>
+    <div style="width:20%; display: inline-block; margin-right: 5%; vertical-align:top">
+        <p style="text-align: left;">
+        <h2>XML Entity</h2>
+        <p style="text-align: left;">&nbsp;</p>
+        <p style="text-align: left;">&nbsp;</p>
+        <p style="text-align: left;">&nbsp;</p>
+        <p style="text-align: left;">&nbsp;</p>
+        <p style="text-align: left;">&nbsp;</p>
+        <p style="text-align: left;">&nbsp;</p>
+
+        </p>
+    </div>
+    <div style="width: 70%; display: inline-block;">
+       <p style="text-align: left; font-weight: bold;">
+	<&nbsp;!DOCTYPE root [<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<&nbsp;!ENTITY post <span style="color: rgb(204, 153, 204);">"MYSTRING"<span style="color: rgb(249, 145, 87);"></span></span>><br>
+	]>
+</p>
+	<h3 style="text-align: left;">DOCX</h3>
+	    <p style="text-align: left;">/word/document.xml</p>
+    <h3 style="text-align: left;">PPTX</h3>
+	    <p style="text-align: left;">/ppt/presentation.xml</p>
+     <h3 style="text-align: left;">XLSX</h3>
+	    <p style="text-align: left;">/xl/workbook.xml</p>
+</div>
+</section>
+<section style="text-align:left">
+<div style="background-color: rgb(232,0,0); width: 35%; height: 250%; position: absolute; top: -10%; left: -45%; z-index: -1;">
+</div>
+<div>
+    <div style="height:6%;"><h2>+OXML_XXE</h2>
+    </div>
+       <p class="fragment" style="font-size:160%; margin-left:10%">XSS Testing</p>
+       <p style="text-align: left; font-size:110%; margin-left:8%" class="fragment"><&nbsp;!ENTITY post <span style="color: rgb(204, 153, 204);">"&lt;script&gt;alert(1)...<span style="color: rgb(249, 145, 87);"></span></p>
+       <p style="text-align: left; font-size:110%; margin-left:8%" class="fragment"><&nbsp;!ENTITY post <span style="color: rgb(204, 153, 204);">"< ![CDATA[&lt;script&gt;alert(1)...<span style="color: rgb(249, 145, 87);"></span></p>
+       <p class="fragment" style="font-size:160%; margin-left:10%">LFI</p>
+       	<p style="text-align: left; font-size:140%; margin-left:8%" class="fragment">Relationship Id="rId1" Type="...relationships/officeDocument" Target="<span style="color: rgb(249, 145, 87);">/word/document.xml</span>"</p>
+</div>
+</section>
+
+<section style="text-align:left">
+<div style="background-color: rgb(232,0,0); width: 35%; height: 250%; position: absolute; top: -10%; left: -45%; z-index: -1;">
+</div>
+<div>
+    <div style="height:6%;"><h2>+OXML Features</h2>
+    </div>
+       <p class="fragment" style="font-size:160%; margin-left:10%">hlinkHover</p>
+       <p class="fragment" style="font-size:160%; margin-left:10%">XSLTransform</p>
+       <p class="fragment" style="font-size:160%; margin-left:10%">Embedded "Documents"</p>
+       <p class="fragment" style="font-size:160%; margin-left:10%">SSRF</p>
+</div>
+</section>
+
+<section style="text-align:left">
+<div style="background-color: rgb(232,0,0); width: 35%; height: 250%; position: absolute; top: -10%; left: -45%; z-index: -1;">
+</div>
+<div>
+    <div style="height:6%;"><h2>+Testing Cheatsheet</h2>
+    </div>
+       <p class="fragment" style="font-size:130%; margin-left:-1%">Classic (X)XE</p>
+       <p class="fragment" style="font-size:130%; margin-left:-1%">Canary Testing DTD and XE</p>
+       <p class="fragment" style="font-size:130%; margin-left:-1%">XSS XE testing (CDATA/plain/attr)</p>
+       <p class="fragment" style="font-size:130%; margin-left:-1%">XE LFI</p>
+       <p class="fragment" style="font-size:130%; margin-left:-1%">Embedded (X)XE attacks</p>
+       <p class="fragment" style="font-size:130%; margin-left:-1%">SSRF (X)XE</p>
+</div>
+</section>
+
+<section>
+<div style="background-color:#00FF00; width: 35%; height: 250%; position: absolute; top: -10%; left: -45%; z-index: -1;">
+</div>
+<div>
+    <div style="height:6%; text-align:left"><h2>Summary Points</h2>
+    </div>
+       <p style="font-size:100%" class="fragment">(DEFENSE) The libraries that parse XML on one part of the site (e.g. API) may not be the same ones that parse uploaded files; verify! Check configurations.</p>
+       <p class="fragment">(DEFENSE) Patches exist, many are recent</p>
+       <p class="fragment">(OFFENSE) Lots of surface area for exploitation</p>
+       <p class="fragment">(OFFENSE) Untouched research targets</p>
+		<p style="font-size:160%" class="fragment">Thanks!<br>http://oxmlxxe.github.io</p>
+
+</div>
+</section>
+
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+
+			// Full list of configuration options available at:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+				// Optional reveal.js plugins
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
+					{ src: 'plugin/notes/notes.js', async: true }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
